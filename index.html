@@ -4,35 +4,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Family Planner</title>
- <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#9a87b8">
 <style>
-:root{--bg:#f3eff8;--paper:#ffffff;--ink:#302d36;--muted:#777080;--line:#ddd5e7;--soft:#ebe3f2;--accent:#9a87b8;--lav:#e1d5ed}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif}.boo-theme{--bg:#eef5fa;--paper:#ffffff;--ink:#2e3439;--muted:#71808b;--line:#d5e2ea;--soft:#e6f0f5;--accent:#86aeca;--lav:#dcecf5}
-button,input{font:inherit}.app{max-width:1000px;margin:auto;padding:28px 18px 60px}
-header{position:relative;text-align:center;margin-bottom:24px;padding-right:130px;padding-left:130px}h1{font-size:32px;letter-spacing:.08em;margin:0;font-weight:600}header p{margin:7px 0 2px;color:var(--muted);font-style:italic;font-size:15px}.names{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--muted)}.today-date{position:absolute;right:0;top:8px;font-family:Arial,sans-serif;font-size:12px;color:var(--muted);text-align:right;line-height:1.35}.today-date strong{display:block;color:var(--ink);font-size:10px;letter-spacing:.12em;text-transform:uppercase}.person-tabs{display:flex;justify-content:center;gap:6px;margin-top:15px}.person{border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:7px 18px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:.1em;cursor:pointer}.person.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px}.daybtn{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:11px 5px;cursor:pointer;color:var(--muted);font-family:Arial,sans-serif}.daybtn strong{display:block;color:var(--ink);font-size:12px}.daybtn span{display:block;font-size:10px;margin-top:5px;line-height:1.25}.daybtn.active{background:var(--accent);color:white}.daybtn.active strong{color:white}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}.panelhead{padding:20px 20px 14px;border-bottom:1px solid var(--line)}h2{margin:0;font-size:22px}.summary{color:var(--muted);font-family:Arial,sans-serif;font-size:12px;margin-top:4px}
-.progress{height:6px;background:var(--soft);margin-top:12px;border-radius:99px;overflow:hidden}.fill{height:100%;width:0;background:var(--accent);transition:.2s}
-.event{display:grid;grid-template-columns:115px 1fr 36px;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);min-height:62px}.event:last-child{border-bottom:0}.time{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);font-weight:600}.desc{font-size:15px;line-height:1.35}.who{display:block;font-family:Arial,sans-serif;font-size:9px;letter-spacing:.08em;color:var(--muted);margin-bottom:2px}.desc.done{text-decoration:line-through;color:#aaa}input[type=checkbox]{width:19px;height:19px;accent-color:#8f87a8;cursor:pointer}
-.section{margin-top:24px}.section h3{font-size:16px;margin:0 0 9px}.routinebox{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:6px 16px}.checkrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-family:Arial,sans-serif;font-size:13px}.checkrow:last-child{border-bottom:0}.checkrow.done{text-decoration:line-through;color:#aaa}
-.actions{display:flex;gap:8px;margin-top:16px}.btn{border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:9px 12px;cursor:pointer;color:var(--muted);font-family:Arial,sans-serif;font-size:12px}.note{font-family:Arial,sans-serif;color:#999;font-size:11px;margin-top:12px;line-height:1.5}
-@media(max-width:650px){header{padding-right:0;padding-left:0}.today-date{position:static;margin-top:10px;text-align:center}.week{grid-template-columns:repeat(4,1fr)}.event{grid-template-columns:78px 1fr 32px;gap:8px;padding:12px 11px}.time{font-size:10px}.desc{font-size:14px}h1{font-size:25px}}
+:root{--bg:#f3eff8;--paper:#fff;--ink:#302d36;--muted:#777080;--line:#ddd5e7;--soft:#ebe3f2;--accent:#9a87b8}
+.boo-theme{--bg:#eef5fa;--ink:#2e3439;--muted:#71808b;--line:#d5e2ea;--soft:#e6f0f5;--accent:#86aeca}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
+button,input{font:inherit}
+.app{max-width:1000px;margin:auto;padding:28px 18px 60px}
+header{position:relative;text-align:center;margin-bottom:24px;padding:0 130px}
+h1{font-size:32px;letter-spacing:.08em;margin:0;font-weight:600}
+header p{margin:7px 0 2px;color:var(--muted);font-style:italic;font-size:15px}
+.names{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.today-date{position:absolute;right:0;top:8px;font-family:Arial,sans-serif;font-size:12px;color:var(--muted);text-align:right;line-height:1.35}
+.today-date strong{display:block;color:var(--ink);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.person-tabs{display:flex;justify-content:center;gap:6px;margin-top:15px}
+.person{border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:7px 18px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:.1em;cursor:pointer}
+.person.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px}
+.daybtn{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:11px 5px;cursor:pointer;color:var(--muted);font-family:Arial,sans-serif}
+.daybtn strong{display:block;color:var(--ink);font-size:12px}
+.daybtn span{display:block;font-size:10px;margin-top:5px;line-height:1.25}
+.daybtn.today strong::after{content:" •"}
+.daybtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.daybtn.active strong{color:#fff}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.panelhead{padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+h2{margin:0;font-size:22px}
+.summary{color:var(--muted);font-family:Arial,sans-serif;font-size:12px;margin-top:4px}
+.progress{height:6px;background:var(--soft);margin-top:12px;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+.event{display:grid;grid-template-columns:115px 1fr 36px;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);min-height:62px}
+.event.now{background:var(--soft);box-shadow:inset 4px 0 0 var(--accent)}
+.event.now .time::before{content:"NOW · ";color:var(--accent)}
+.event:last-child{border-bottom:0}
+.time{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);font-weight:600}
+.desc{font-size:15px;line-height:1.35}
+.who{display:block;font-family:Arial,sans-serif;font-size:9px;letter-spacing:.08em;color:var(--muted);margin-bottom:2px}
+.desc.done{text-decoration:line-through;color:#aaa}
+input[type=checkbox]{width:19px;height:19px;accent-color:var(--accent);cursor:pointer}
+.section{margin-top:24px}
+.section h3{font-size:16px;margin:0 0 9px}
+.routinebox{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:6px 16px}
+.checkrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-family:Arial,sans-serif;font-size:13px}
+.checkrow:last-child{border-bottom:0}
+.checkrow.done{text-decoration:line-through;color:#aaa}
+.actions{display:flex;gap:8px;margin-top:16px}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:9px 12px;cursor:pointer;color:var(--muted);font-family:Arial,sans-serif;font-size:12px}
+.note{font-family:Arial,sans-serif;color:#999;font-size:11px;margin-top:12px;line-height:1.5}
+@media(max-width:650px){
+header{padding:0}.today-date{position:static;margin-top:10px;text-align:center}
+.week{grid-template-columns:repeat(4,1fr)}
+.event{grid-template-columns:78px 1fr 32px;gap:8px;padding:12px 11px}
+.time{font-size:10px}.desc{font-size:14px}h1{font-size:25px}}
 </style>
 </head>
 <body>
 <div class="app">
-<header><h1>THE FAMILY PLANNER</h1><p>Our Week, Rhythm &amp; Routines</p><div class="names">RACHEL · BOO · CHUMPY</div><div class="today-date" id="todayDate"></div><div class="person-tabs"><button id="rachelTab" class="person active" onclick="person='rachel';render()">RACHEL</button><button id="booTab" class="person" onclick="person='boo';render()">BOO</button></div></header>
+<header>
+<h1>THE FAMILY PLANNER</h1>
+<p>Our Week, Rhythm &amp; Routines</p>
+<div class="names">GOO · BOO · CHUMPY</div>
+<div class="today-date" id="todayDate"></div>
+<div class="person-tabs">
+<button id="rachelTab" class="person active" onclick="setPerson('rachel')">GOO</button>
+<button id="booTab" class="person" onclick="setPerson('boo')">BOO</button>
+</div>
+</header>
 <div class="week" id="week"></div>
-<div class="panel"><div class="panelhead"><h2 id="title"></h2><div class="summary" id="summary"></div><div class="progress"><div class="fill" id="fill"></div></div></div><div id="events"></div></div>
-<div class="section" id="routineSection"></div>
+<div class="panel">
+<div class="panelhead"><h2 id="title"></h2><div class="summary" id="summary"></div><div class="progress"><div class="fill" id="fill"></div></div></div>
+<div id="events"></div>
+</div>
 <div class="section" id="nightSection"></div>
 <div class="actions"><button class="btn" onclick="resetDay()">Reset this day</button></div>
-<div class="note">Checkmarks are saved in this browser. The schedule is based directly on your Family Planner; we can keep refining the app as your routine changes.</div>
+<div class="note">Checkmarks are saved in this browser.</div>
 </div>
 <script>
 const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const weekdays=days.slice(1,6);
+
 const summaries={
 Sunday:"Church, family lunch & dinner, movie night",
 Monday:"Weekday rhythm · check-in & coding, 8pm",
@@ -42,61 +95,156 @@ Thursday:"Weekday rhythm · piano lesson 6:30pm · Bible study",
 Friday:"Weekday rhythm · meal plan & laundry, 8pm",
 Saturday:"Groceries, laundry, family time, bath"
 };
-const base=[
-["Sunday",[
-["7:30 AM","FAMILY","Wake up"],["8:40 AM","FAMILY","Leave for church"],["9:00–10:00 AM","FAMILY","Church"],["10:45–11:45 AM","FAMILY","Sunday school / Bible study (potentially)"],["12:00 PM","FAMILY","Eat lunch at home"],["Afternoon","","Meal prep for Rachel + Eric · bake some things"],["5:00 PM","FAMILY","Eat dinner at home + family movie night"],["9:30 PM","","Evening routine begins · prepare Monday school/work bags + lunches · pack bedding"],["10:00 PM","","In bed"]]],
-["Monday",[
-["6:30 AM","RACHEL","Wake up · take colestipol"],["6:30–7:10 AM","RACHEL","Get Eric ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],["7:10 AM","RACHEL","Leave for school"],["7:30–7:45 AM","RACHEL","School drop-off"],["8:00–8:15 AM","RACHEL","Arrive at work"],["4:00 PM","RACHEL","Leave work · gym or head home"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:30 PM","BOO","Get home · start dinner"],["4:30–5:00 PM","RACHEL","If home, start dinner; otherwise gym"],["6:00 PM","FAMILY","Dinner + devotional · Rachel takes prenatal"],["7:30–8:00 PM","RACHEL","Evening prep routine"],["8:00 PM","WITH BOO","Weekly check-in + coding practice"],["10:00 PM","RACHEL","In bed · Metamucil at bedtime"],["10:30–11:00 PM","BOO","In bed"]]],
-["Tuesday",[
-["6:30 AM","RACHEL","Wake up · take colestipol"],["6:30–7:10 AM","RACHEL","Get Eric ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],["7:10 AM","RACHEL","Leave for school"],["7:30–7:45 AM","RACHEL","School drop-off"],["8:00–8:15 AM","RACHEL","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:00 PM","RACHEL","Leave work · gym or head home"],["4:30 PM","BOO","Get home · start dinner"],["4:30–5:00 PM","RACHEL","If home, start dinner; otherwise gym"],["6:00 PM","FAMILY","Dinner + devotional · Rachel takes prenatal"],["6:15 PM","FAMILY","Leave for swim"],["6:30–7:00 PM","FAMILY","Eric's swim class"],["7:00 PM","FAMILY","Head home"],["7:30–8:00 PM","RACHEL","Evening prep routine"],["10:00 PM","RACHEL","In bed · Metamucil at bedtime"],["10:30–11:00 PM","BOO","In bed"]]],
-["Wednesday",[
-["6:30 AM","RACHEL","Wake up · take colestipol"],["6:30–7:10 AM","RACHEL","Get Eric ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],["7:10 AM","RACHEL","Leave for school"],["7:30–7:45 AM","RACHEL","School drop-off"],["8:00–8:15 AM","RACHEL","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:00 PM","RACHEL","Leave work · gym or head home"],["4:30 PM","BOO","Get home · start potluck food/dinner"],["5:30 PM","FAMILY","Leave for potluck"],["6:00 PM","FAMILY","Potluck dinner"],["7:00 PM","FAMILY","Service"],["7:30–8:00 PM","RACHEL","Evening prep routine when home; otherwise complete after service"],["10:00 PM","RACHEL","In bed · Metamucil at bedtime"],["10:30–11:00 PM","BOO","In bed"],["Wednesday WFH","RACHEL","Optional mid-week laundry load to make Saturday easier"]],
-["Thursday",[
-["6:30 AM","RACHEL","Wake up · take colestipol"],["6:30–7:10 AM","RACHEL","Get Eric ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],["7:10 AM","RACHEL","Leave for school"],["7:30–7:45 AM","RACHEL","School drop-off"],["8:00–8:15 AM","RACHEL","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:00 PM","RACHEL","Leave work · gym or head home"],["4:30 PM","BOO","Get home · start dinner"],["4:30–5:00 PM","RACHEL","If home, start dinner; otherwise gym"],["6:00 PM","FAMILY","Dinner + devotional · Rachel takes prenatal"],["6:30 PM","RACHEL","Eric's home piano lesson"],["After piano","WITH BOO","Bible study"],["7:30–8:00 PM","RACHEL","Evening prep routine"],["10:00 PM","RACHEL","In bed · Metamucil at bedtime"],["10:30–11:00 PM","BOO","In bed"]]],
-["Friday",[
-["6:30 AM","RACHEL","Wake up · take colestipol"],["6:30–7:10 AM","RACHEL","Get Eric ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],["7:10 AM","RACHEL","Leave for school"],["7:30–7:45 AM","RACHEL","School drop-off"],["8:00–8:15 AM","RACHEL","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:00 PM","RACHEL","Leave work · gym or head home"],["4:30 PM","BOO","Get home · start dinner"],["4:30–5:00 PM","RACHEL","If home, start dinner; otherwise gym"],["6:00 PM","FAMILY","Dinner + devotional · Rachel takes prenatal"],["7:30–8:00 PM","RACHEL","Evening prep routine"],["Evening","FAMILY","Social night / Friday plans"],["Evening","","Receive Eric's bedding back"],["10:00 PM","RACHEL","In bed · Metamucil at bedtime"],["10:30–11:00 PM","BOO","In bed"]]],
-["Saturday",[
-["7:30 AM","FAMILY","Wake up"],["Morning","","Rachel does laundry"],["Afternoon","FAMILY","Get groceries + family time / errands & household tasks"],["Evening","FAMILY","Do bath night"],["Evening","WITH BOO","Watch shows together once Eric is in bed"],["Evening","","Finish laundry"]]]]
-];
-const data=Object.fromEntries(base);
 
-const Chumpy=["Teeth","Pajamas","Bedtime story","Song","Prayer","Goodnight · in bed by 8:00 PM"];
-const nightRachel=["Pack my lunch","Pack Boy's lunch + snacks","Pack Boy's backpack: folder, water bottle, sweater if needed","Pack my work bag: gym clothes, sweater, gym headphones, water bottle, laptop, portable charger if needed","Lay out Boy's school clothes","Lay out my work clothes"];
-const nightBoo=["Take out trash","Catch up dishes","Check kitty litter box","Check auto feeders"];
-const booData={
+/* ---------- Goo ---------- */
+const rMorning=[
+["6:30 AM","GOO","Wake up · take colestipol"],
+["6:30–7:10 AM","GOO","Get Boy ready for school · get ready for work · start breakfast · put ice packs in both lunches · pack both lunches"],
+["7:10 AM","GOO","Leave for school"],
+["7:30–7:45 AM","GOO","School drop-off"],
+["8:00–8:15 AM","GOO","Arrive at work"]];
+const rAfternoon=[
+["3:30 PM","BOO","Leave work to pick up Boy"],
+["4:00 PM","GOO","Leave work · gym or head home"],
+["4:30–5:00 PM","GOO","If home, start dinner; otherwise gym"],
+["6:00 PM","FAMILY","Dinner + devotional · Goo takes prenatal"]];
+const rPrep=["7:30–8:00 PM","GOO","Evening prep routine"];
+const rBed=[["10:00 PM","GOO","In bed · Metamucil at bedtime"]];
+
+const rachelData={
 Sunday:[
-["7:30 AM","FAMILY","Wake up"],["8:40 AM","FAMILY","Leave for church"],["9:00–10:00 AM","FAMILY","Church"],["10:45–11:45 AM","FAMILY","Sunday school / Bible study (potentially)"],["12:00 PM","FAMILY","Eat lunch at home"],["Afternoon","","Meal prep for Rachel + Eric · bake some things"],["5:00 PM","FAMILY","Eat dinner at home + family movie night"],["10:30–11:00 PM","","In bed"]],
-Monday:[
-["6:30 AM","","Wake up"],["7:10 AM","BOO","Leave for work"],["7:30 AM","BOO","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:30 PM","BOO","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"],["8:00 PM","WITH RACHEL","Weekly check-in + coding practice"],["10:30–11:00 PM","BOO","In bed"]],
-Tuesday:[
-["6:30 AM","","Wake up"],["7:10 AM","BOO","Leave for work"],["7:30 AM","BOO","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:30 PM","BOO","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"],["6:15 PM","FAMILY","Leave for swim"],["6:30–7:00 PM","FAMILY","Eric's swim class"],["7:00 PM","FAMILY","Head home"],["10:30–11:00 PM","BOO","In bed"]],
-Wednesday:[
-["6:30 AM","","Wake up"],["7:10 AM","BOO","Leave for work"],["7:30 AM","BOO","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:30 PM","BOO","Get home · start potluck food/dinner"],["5:30 PM","FAMILY","Leave for potluck"],["6:00 PM","FAMILY","Potluck dinner"],["7:00 PM","FAMILY","Service"],["10:30–11:00 PM","BOO","In bed"]],
-Thursday:[
-["6:30 AM","","Wake up"],["7:10 AM","BOO","Leave for work"],["7:30 AM","BOO","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric"],["4:30 PM","BOO","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"],["6:30 PM","RACHEL","Eric's home piano lesson"],["After piano","WITH RACHEL","Bible study"],["10:30–11:00 PM","BOO","In bed"]],
-Friday:[
-["6:30 AM","","Wake up"],["7:10 AM","BOO","Leave for work"],["7:30 AM","BOO","Arrive at work"],["3:30 PM","BOO","Leave work to pick up Eric; Receive Eric's bedding back"],["4:30 PM","BOO","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"],["Evening","FAMILY","Social night / Friday plans"],["10:30–11:00 PM","BOO","In bed"]],
+["7:30 AM","FAMILY","Wake up"],["8:40 AM","FAMILY","Leave for church"],["9:00–10:00 AM","FAMILY","Church"],
+["10:45–11:45 AM","FAMILY","Sunday school / Bible study (potentially)"],["12:00 PM","FAMILY","Eat lunch at home"],
+["Afternoon","","Meal prep for Goo + Boy · bake some things"],
+["5:00 PM","FAMILY","Eat dinner at home + family movie night"],
+["9:30 PM","GOO","Evening routine · prepare Monday school/work bags + lunches · pack bedding"],
+rBed[0]],
+Monday:[...rMorning,...rAfternoon,rPrep,["8:00 PM","WITH BOO","Weekly check-in + coding practice"],...rBed],
+Tuesday:[...rMorning,...rAfternoon,
+["6:15 PM","FAMILY","Leave for swim"],["6:30–7:00 PM","FAMILY","Boy's swim class"],["7:00 PM","FAMILY","Head home"],rPrep,...rBed],
+Wednesday:[...rMorning,
+["3:30 PM","BOO","Leave work to pick up Boy"],["4:00 PM","GOO","Leave work · gym or head home"],
+["5:30 PM","FAMILY","Leave for potluck"],
+["6:00 PM","FAMILY","Potluck dinner"],["7:00 PM","FAMILY","Service"],
+["7:30–8:00 PM","GOO","Evening prep routine when home; otherwise complete after service"],...rBed,
+["Optional","GOO","Wednesday WFH: mid-week laundry load to make Saturday easier"]],
+Thursday:[...rMorning,...rAfternoon,
+["6:30 PM","GOO","Boy's home piano lesson"],["After piano","WITH BOO","Bible study"],rPrep,...rBed],
+Friday:[...rMorning,...rAfternoon,rPrep,
+["Evening","FAMILY","Social night / Friday plans"],["Evening","","Receive Boy's bedding back"],...rBed],
 Saturday:[
-["7:30 AM","FAMILY","Wake up"],["Afternoon","FAMILY","Get groceries + family time / errands & household tasks"],["Evening","FAMILY","Do bath night"],["Evening","WITH BOO","Watch shows together once Eric is in bed"],["Evening","","Finish laundry"]]
+["7:30 AM","FAMILY","Wake up"],["Morning","","Goo does laundry"],
+["Afternoon","FAMILY","Get groceries + family time / errands & household tasks"],
+["Evening","FAMILY","Do bath night"],["Evening","WITH BOO","Watch shows together once Boy is in bed"],
+["Evening","","Finish laundry"]]
 };
 
-let selected=days[new Date().getDay()];
-let person="rachel";
-let checks=JSON.parse(localStorage.getItem("familyPlannerChecks")||"{}");
-function k(scope,i){return scope+"-"+i}
-function renderTodayDate(){const d=new Date();document.getElementById("todayDate").innerHTML=`<strong>Today</strong>${d.toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"})}`}
-function renderWeek(){document.getElementById("week").innerHTML=days.map(d=>`<button class="daybtn ${d===selected?"active":""}" onclick="selected='${d}';render()"><strong>${d.slice(0,3).toUpperCase()}</strong><span>${summaries[d]}</span></button>`).join("")}
-function render(){
- document.body.classList.toggle("boo-theme",person==="boo"); document.getElementById("rachelTab").classList.toggle("active",person==="rachel"); document.getElementById("booTab").classList.toggle("active",person==="boo"); renderTodayDate(); renderWeek(); document.getElementById("title").textContent=selected.toUpperCase(); document.getElementById("summary").textContent=summaries[selected];
- let ev=(person==="boo"?booData[selected]:data[selected])||[]; document.getElementById("events").innerHTML=ev.map((x,i)=>{let done=!!checks[person+"-"+k(selected,i)];return `<div class="event"><div class="time">${x[0]}</div><div class="desc ${done?"done":""}">${(x[1] && x[1] !== "RACHEL")?`<span class="who">${x[1]}</span>`:""}${x[2]}</div><input type="checkbox" ${done?"checked":""} onchange="toggle('${selected}',${i})"></div>`}).join("");
- let done=ev.filter((_,i)=>checks[person+"-"+k(selected,i)]).length; document.getElementById("summary").textContent=`${summaries[selected]} · ${done} of ${ev.length} checked`;document.getElementById("fill").style.width=(done/(ev.length||1)*100)+"%";
- document.getElementById("routineSection").innerHTML="";
- if(person==="rachel" && ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"].includes(selected)){document.getElementById("nightSection").innerHTML=`<h3>NIGHT-BEFORE CHECKLIST · RACHEL</h3><div class="routinebox">${nightRachel.map((x,i)=>checkRow("rachelnight",i,x)).join("")}</div>`;}else{document.getElementById("nightSection").innerHTML="";}
+/* ---------- Boo ---------- */
+const bMorning=[["6:30 AM","","Wake up"],["7:10 AM","","Leave for work"],["7:30 AM","","Arrive at work"]];
+const bAfternoon=[
+["3:30 PM","","Leave work to pick up Boy"],["4:30 PM","","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"]];
+const bBed=["10:30–11:00 PM","","In bed"];
+
+const booData={
+Sunday:rachelData.Sunday.filter(e=>!e[2].startsWith("Evening routine")&&e[0]!=="10:00 PM").concat([bBed]),
+Monday:[...bMorning,...bAfternoon,["8:00 PM","WITH GOO","Weekly check-in + coding practice"],bBed],
+Tuesday:[...bMorning,...bAfternoon,
+["6:15 PM","FAMILY","Leave for swim"],["6:30–7:00 PM","FAMILY","Boy's swim class"],["7:00 PM","FAMILY","Head home"],bBed],
+Wednesday:[...bMorning,
+["3:30 PM","","Leave work to pick up Boy"],["4:30 PM","","Get home · start potluck food/dinner"],
+["5:30 PM","FAMILY","Leave for potluck"],["6:00 PM","FAMILY","Potluck dinner"],["7:00 PM","FAMILY","Service"],bBed],
+Thursday:[...bMorning,...bAfternoon,
+["6:30 PM","GOO","Boy's home piano lesson (Goo's)"],["After piano","WITH GOO","Bible study"],bBed],
+Friday:[...bMorning,
+["3:30 PM","","Leave work to pick up Boy · receive Boy's bedding back"],
+["4:30 PM","","Get home · start dinner"],["6:00 PM","FAMILY","Dinner + devotional"],
+["Evening","FAMILY","Social night / Friday plans"],bBed],
+Saturday:rachelData.Saturday.filter(e=>e[2]!=="Goo does laundry")
+};
+
+/* ---------- Night-before checklists ---------- */
+const nightLists={
+rachel:{title:"NIGHT-BEFORE CHECKLIST · GOO",items:[
+"Pack my lunch","Pack Boy's lunch + snacks","Pack Boy's backpack: folder, water bottle, sweater if needed",
+"Pack my work bag: gym clothes, sweater, gym headphones, water bottle, laptop, portable charger if needed",
+"Lay out Boy's school clothes","Lay out my work clothes"]},
+boo:{title:"NIGHTLY CHECKLIST · BOO",items:[
+"Take out trash","Catch up dishes","Check kitty litter box","Check auto feeders"]}
+};
+
+/* ---------- State ---------- */
+const todayName=days[new Date().getDay()];
+let selected=todayName;
+let person="boo";
+try{const p=localStorage.getItem("familyPlannerPerson");if(p==="boo"||p==="rachel")person=p}catch(e){}
+let checks={};
+try{checks=JSON.parse(localStorage.getItem("familyPlannerChecks")||"{}")}catch(e){}
+(function(){ // checkmarks start fresh each week (weeks begin Sunday)
+ const d=new Date();d.setDate(d.getDate()-d.getDay());
+ const wk=d.toDateString();
+ try{if(localStorage.getItem("familyPlannerWeek")!==wk){checks={};localStorage.setItem("familyPlannerWeek",wk);localStorage.setItem("familyPlannerChecks","{}")}}catch(e){}
+})();
+function save(){try{localStorage.setItem("familyPlannerChecks",JSON.stringify(checks))}catch(e){}}
+const key=(...p)=>[person,selected,...p].join("-");
+
+function setPerson(p){person=p;try{localStorage.setItem("familyPlannerPerson",p)}catch(e){}render()}
+function setDay(d){selected=d;render()}
+function toggle(i){checks[key(i)]=!checks[key(i)];save();render()}
+function toggleNight(i,v){checks[key("night",i)]=v;save();render()}
+function resetDay(){
+ if(!confirm("Reset checkmarks for "+selected+"?"))return;
+ Object.keys(checks).filter(k=>k.startsWith(person+"-"+selected+"-")).forEach(k=>delete checks[k]);
+ save();render();
 }
-function checkRow(scope,i,text){let key=person+"-"+selected+"-"+scope+"-"+i,done=!!checks[key];return `<label class="checkrow ${done?"done":""}"><input type="checkbox" ${done?"checked":""} onchange="checks['${key}']=this.checked;localStorage.setItem('familyPlannerChecks',JSON.stringify(checks));render()">${text}</label>`}
-function toggle(d,i){checks[person+"-"+k(d,i)]=!checks[person+"-"+k(d,i)];localStorage.setItem("familyPlannerChecks",JSON.stringify(checks));render()}
-function resetDay(){if(confirm("Reset checkmarks for "+selected+"?")){Object.keys(checks).filter(x=>x.startsWith(person+"-"+selected+"-")).forEach(x=>delete checks[x]);localStorage.setItem("familyPlannerChecks",JSON.stringify(checks));render()}}
+
+/* ---------- "Now" highlight ---------- */
+function parseStart(t){
+ const m=t.match(/^(\d{1,2}):(\d{2})(?:–\d{1,2}:\d{2})?\s*(AM|PM)$/);
+ if(!m)return null;
+ let h=+m[1]%12;if(m[3]==="PM")h+=12;
+ return h*60+ +m[2];
+}
+function nowIndexes(ev){
+ if(selected!==todayName)return new Set();
+ const n=new Date(),mins=n.getHours()*60+n.getMinutes();
+ const starts=ev.map(e=>parseStart(e[0]));
+ const timed=starts.filter(s=>s!==null);
+ if(!timed.length)return new Set();
+ const past=timed.filter(s=>s<=mins);
+ const target=past.length?Math.max(...past):Math.min(...timed);
+ return new Set(starts.map((s,i)=>s===target?i:-1).filter(i=>i>=0));
+}
+
+/* ---------- Render ---------- */
+function render(){
+ document.body.classList.toggle("boo-theme",person==="boo");
+ document.getElementById("rachelTab").classList.toggle("active",person==="rachel");
+ document.getElementById("booTab").classList.toggle("active",person==="boo");
+ document.getElementById("todayDate").innerHTML=`<strong>Today</strong>${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"})}`;
+ document.getElementById("week").innerHTML=days.map(d=>`<button class="daybtn ${d===selected?"active":""} ${d===todayName?"today":""}" onclick="setDay('${d}')"><strong>${d.slice(0,3).toUpperCase()}</strong><span>${summaries[d]}</span></button>`).join("");
+ document.getElementById("title").textContent=selected.toUpperCase();
+
+ const ev=(person==="boo"?booData:rachelData)[selected]||[];
+ const mine=person==="boo"?"BOO":"GOO";
+ const nowSet=nowIndexes(ev);
+ document.getElementById("events").innerHTML=ev.map((x,i)=>{
+  const done=!!checks[key(i)];
+  const tag=x[1]&&x[1]!==mine?`<span class="who">${x[1]}</span>`:"";
+  return `<div class="event ${nowSet.has(i)?"now":""}"><div class="time">${x[0]}</div><div class="desc ${done?"done":""}">${tag}${x[2]}</div><input type="checkbox" ${done?"checked":""} onchange="toggle(${i})"></div>`;
+ }).join("");
+ const doneCount=ev.filter((_,i)=>checks[key(i)]).length;
+ document.getElementById("summary").textContent=`${summaries[selected]} · ${doneCount} of ${ev.length} checked`;
+ document.getElementById("fill").style.width=(doneCount/(ev.length||1)*100)+"%";
+
+ const night=nightLists[person];
+ document.getElementById("nightSection").innerHTML=(selected!=="Saturday")
+  ?`<h3>${night.title}</h3><div class="routinebox">${night.items.map((t,i)=>{const d=!!checks[key("night",i)];return `<label class="checkrow ${d?"done":""}"><input type="checkbox" ${d?"checked":""} onchange="toggleNight(${i},this.checked)">${t}</label>`}).join("")}</div>`
+  :"";
+}
 render();
+setInterval(render,60000);
+const nowRow=document.querySelector(".event.now");
+if(nowRow)nowRow.scrollIntoView({block:"center"});
 </script>
 </body>
 </html>
